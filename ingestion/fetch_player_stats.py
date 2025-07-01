@@ -22,13 +22,13 @@ def save_to_csv(df: pd.DataFrame, player_name: str, output_dir: str = "data/raw"
     filename = f"{player_name.replace(' ', '_')}_gamelog_{timestamp}.csv"
     filepath = os.path.join(output_dir, filename)
     df.to_csv(filepath, index=False)
-    print(f"✅ Saved {len(df)} records to {filepath}")
+    print(f" Saved {len(df)} records to {filepath}")
 
 def main():
     player_name = "LeBron James"
     season = "2023"
 
-    print(f"📥 Fetching game logs for {player_name} ({season})")
+    print(f" Fetching game logs for {player_name} ({season})")
     player_id = get_player_id(player_name)
     df = fetch_player_stats(player_id, season)
     save_to_csv(df, player_name)
