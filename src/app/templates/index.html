@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NBA Stats Viewer</title>
+</head>
+<body>
+  <h1>NBA Player Stats Lookup</h1>
+  
+  <form method="POST">
+  <label>Player Name:</label>
+  <input list="players" name="player_name" required autocomplete="off" />
+  <datalist id="players">
+    {% for pname in players %}
+      <option value="{{ pname }}"></option>
+    {% endfor %}
+  </datalist>
+
+  <button type="submit">Get Stats</button>
+</form>
+
+
+  {% if data is not none %}
+    {% if data.empty %}
+      <p>No results found.</p>
+    {% elif 'error' in data.columns %}
+      <p>Error: {{ data['error'][0] }}</p>
+    {% else %}
+      <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+          <tr>
+            {% for col in data.columns %}
+              <th>{{ col }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data.itertuples() %}
+            <tr>
+              {% for value in row[1:] %}
+                <td>{{ value }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  {% endif %}
+</body>
+</html>
